@@ -1,11 +1,13 @@
 {# tutorial/templates/tutorial/people.html #}
 {% load render_table from django_tables2 %}
+{% load static %}
 <!doctype html>
 <html>
 
 <head>
     <title>Lista de mensajes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'mensajes/estilos.css' %}">
 </head>
 
 <body>
@@ -20,7 +22,8 @@
     </button>
 
     {%if request.user.is_authenticated %}
-    <p>registrado como {{request.user.username}} <span> </span><a href="{% url 'mensajes:salir' %}"> salir</a></p>
+    <p>registrado como {{request.user.username}} <span> </span><a class="btn" href="{% url 'mensajes:salir' %}">
+            salir</a></p>
     {%endif%}
 </body>
 

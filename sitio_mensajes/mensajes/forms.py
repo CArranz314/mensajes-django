@@ -16,16 +16,10 @@ class CrearCuenta(UserCreationForm):
 
     # para personalizar los input del formulario se hace desde aqui
     username = forms.CharField(
-        widget=forms.TextInput(
-            attrs={"placeholder": "ej: pepito69", "class": "rounded-r-xl"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "ej: pepito69", "class": "campos"})
     )
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "rounded-r-xl"})
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "rounded-r-xl"})
-    )
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "campos"}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "campos"}))
 
 
 class AccederCuenta(AuthenticationForm):
@@ -34,13 +28,9 @@ class AccederCuenta(AuthenticationForm):
     """
 
     username = forms.CharField(
-        widget=forms.TextInput(
-            attrs={"placeholder": "ej: pepito69", "class": "rounded-r-xl"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "ej: pepito69", "class": "campos"})
     )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "rounded-r-xl"})
-    )
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "campos"}))
 
 
 class CrearMensaje(forms.ModelForm):
@@ -52,9 +42,10 @@ class CrearMensaje(forms.ModelForm):
         model = Mensaje
         fields = ("titulo", "contenido")
 
+    # añadimos required=false puesto que queremos que se pueda dejar el titulo en blanco
     titulo = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "ej: pepito69", "class": "rounded-r-xl"}
+            attrs={"placeholder": "ej: pepito69", "class": "campos"}
         ),
         required=False,
     )
@@ -62,7 +53,7 @@ class CrearMensaje(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 "placeholder": "ej: pepito69",
-                "class": "rounded-r-xl",
+                "class": "campos",
                 "rows": 5,
                 "cols": 20,
             }
