@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Mensaje de {{mensaje.usuario}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <h1>MENSAJE DE {{mensaje.usuario}}, A LAS {{mensaje.fecha}}</h1>
+    <h2>{% if mensaje.titulo|length < 1%}(Sin título){%else%}{{mensajes.titulo}}{%endif%}</h2>
+            <p>{{mensaje.contenido}}</p>
+            <button><a href="{% url 'mensajes:listar' %}">LISTA DE MENSAJES</a></button>
+
+</body>
+
+{%if request.user.is_authenticated %}
+<p>registrado como {{request.user.username}} <span> </span><a href="{% url 'mensajes:salir' %}"> salir</a></p>
+{%endif%}
+
+
+</html>
