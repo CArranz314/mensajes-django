@@ -1,0 +1,24 @@
+{% extends 'messages_app/base.html' %}
+{% block title%} Nuevo mensaje{% endblock%}
+{% block content%}
+
+<h1>NUEVO MENSAJE</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <ul>
+        <li>
+            <label for="usuario">Nombre:</label>
+            <input type="usuario" id="usuario" name="usuario" value={{request.user.username}} disabled>
+        </li>
+        <li>
+            <label for="titulo">Titulo(opcional):</label>
+            {{form.title}}
+        </li>
+        <li>
+            <label for="contenido">Mensaje:</label>
+            {{form.content}}
+        </li>
+    </ul>
+    <input type="submit" value="ENVIAR MENSAJE">
+</form>
+{% endblock%}

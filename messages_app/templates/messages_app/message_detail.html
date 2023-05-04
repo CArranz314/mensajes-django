@@ -1,0 +1,14 @@
+{% extends 'messages_app/base.html' %}
+{% block title%} Mensaje de {{message.user}}{% endblock%}
+{% block content%}
+
+<h1>MENSAJE DE {{message.user}}, A LAS {{message.date}}</h1>
+<h2>{% if message.title|length < 1%}(Sin título){%else%}{{message.title}}{%endif%}</h2>
+        <p>{{message.content}}</p>
+        <button><a href="{% url 'messages_app:list' %}">LISTA DE MENSAJES</a></button>
+
+        {%if request.user.is_authenticated %}
+        <p>registrado como {{request.user.username}} <span> </span><a href="{% url 'messages_app:logout' %}">
+                salir</a></p>
+        {%endif%}
+        {% endblock%}
