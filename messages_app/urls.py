@@ -12,6 +12,7 @@ urlpatterns = [
     path("<int:pk>", views.message_detail, name="message_detail"),
     path("new/", views.new_message, name="new_message"),
     path("create_account/", views.create_account, name="create_account"),
+    # django auth views URLs
     path(
         "logout/",
         auth_views.LogoutView.as_view(next_page="messages_app:list"),
@@ -24,6 +25,34 @@ urlpatterns = [
         ),
         name="login",
     ),
-    path("api/queryset", viewsets.MessageAPIViewSet.as_view()),
-    path("api/queryset_user", viewsets.MessagesPerUserAPIViewSet.as_view()),
+    # viewset URLs
+    path("api/message/queryset2", viewsets.MessageViewSet.as_view({"get": "list"})),
+    path(
+        "api/message/queryset2_id/<int:pk>",
+        viewsets.MessageViewSet.as_view({"get": "retrieve"}),
+    ),
+    path(
+        "api/message/queryset2_create/",
+        viewsets.MessagePostViewSet.as_view({"post": "create"}),
+    ),
+    path(
+        "api/message/queryset2_p_update/<int:pk>",
+        viewsets.MessageViewSet.as_view({"patch": "partial_update"}),
+    ),
+    path(
+        "api/message/queryset2_update/<int:pk>",
+        viewsets.MessageViewSet.as_view({"patch": "update"}),
+    ),
+    path(
+        "api/message/queryset2_delete/<int:pk>",
+        viewsets.MessageViewSet.as_view({"delete": "destroy"}),
+    ),
+    path("api/user/queryset2", viewsets.UserViewSet.as_view({"get": "list"})),
+    path(
+        "api/user/queryset2_id/<int:pk>",
+        viewsets.UserViewSet.as_view({"get": "retrieve"}),
+    ),
+    # APIView URLs
+    path("api/queryset", viewsets.MessageAPIView.as_view()),
+    path("api/queryset_user", viewsets.MessagesPerUserAPIView.as_view()),
 ]
