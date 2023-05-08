@@ -12,6 +12,7 @@ urlpatterns = [
     path("<int:pk>", views.message_detail, name="message_detail"),
     path("new/", views.new_message, name="new_message"),
     path("create_account/", views.create_account, name="create_account"),
+    path("search/", views.results, name="results"),
     # django auth views URLs
     path(
         "logout/",

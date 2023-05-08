@@ -6,7 +6,9 @@
 {% trans 'new message' as new_message %}
 
 <div class="container text-primary py-3 px-3">
-        <div class="row"><h1>{% translate 'messages'|upper %}</h1></div>
+        <div class="row"><h1>{% blocktranslate count total=total %}There is {{total}} result for '{{search}}' :{% plural %}There are {{total}} results for '{{search}}' :{% endblocktranslate %}
+          </h1></div>
+
         <div class="row">{% render_table messages %}</div>
         <div class="row">{%if request.user.is_authenticated %}
             <a href="{% url 'messages_app:new_message' %}" class="btn btn-primary">{{ new_message|upper }}</a>

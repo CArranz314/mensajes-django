@@ -12,7 +12,7 @@ class Message(models.Model):
     user = models.ForeignKey(
         User, related_name="messages", on_delete=models.CASCADE, verbose_name=_("user")
     )
-    title = models.CharField(max_length=200, blank=True, verbose_name=_("title"))
+    title = models.CharField(_("title"), max_length=200, blank=True)
     content = models.TextField(verbose_name=_("content"))
     date = models.DateTimeField(verbose_name=_("date"))
 

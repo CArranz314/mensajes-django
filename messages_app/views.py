@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Message
 from .tables import MessageTable
@@ -13,10 +14,32 @@ def list(request):
     """
     View for listing all messages
     """
+
     messages = Message.objects.all()
     table = MessageTable(messages)
     context = {"messages": table}
     return render(request, "messages_app/list.html", context)
+
+
+def results(request):
+    """
+    View for listing messages whose content matches the search terms
+    """
+    search = request.GET.get("search")
+    # por ahora usa el template de index, pero debería tener uno propio
+
+    if len(search) == 0:
+        messages = Message.objects.all()
+        table = MessageTable(messages)
+        context = {"messages": table}
+        return render(request, "messages_app/list.html", context)
+    else:
+        messages = Message.objects.all().filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
+        table = MessageTable(messages)
+        context = {"messages": table, "search": search, "total": len(messages)}
+        return render(request, "messages_app/results.html", context)
 
 
 @login_required

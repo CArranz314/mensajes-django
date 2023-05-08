@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,18 +30,29 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_BASE = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_tables2",
-    "messages_app",
-    "rest_framework",
 ]
+
+THIRD_PARTY_APPS = [
+    "django_tables2",
+    "oauth2_provider",
+    "corsheaders",
+    "rest_framework",
+    "crispy_forms",
+    "crispy_bootstrap5",
+]
+
+MY_APPS = [
+    "messages_app",
+]
+
+INSTALLED_APPS = DJANGO_BASE + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -50,7 +62,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # necesario para localizacion
+    "django.middleware.locale.LocaleMiddleware",
+    # necesario para CORS
+    # "corsheaders.middleware.CorsMiddleware",
 ]
+
+# Allow CORS requests from all domains (just for the scope of this tutorial):
+# CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = "message_site.urls"
 
@@ -106,7 +125,20 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+# gpt
+LANGUAGES = [
+    ("en", "English"),
+    ("es", "Español"),
+]
+
+# gpt
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, app, "locale")
+    for app in os.listdir(BASE_DIR)
+    if os.path.isdir(os.path.join(BASE_DIR, app))
+    and os.path.exists(os.path.join(BASE_DIR, app, "locale"))
+]
+LANGUAGE_CODE = "es"
 
 TIME_ZONE = "UTC"
 
@@ -122,7 +154,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ]
 }
 

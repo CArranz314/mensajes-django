@@ -1,14 +1,29 @@
 {% extends 'messages_app/base.html' %}
 {% block title%} Mensaje de {{message.user}}{% endblock%}
 {% block content%}
+{% load i18n %}
+<div class="container py-3 px-3">
+        <div class="row">
+                <h2 class="text-primary text-center">{% blocktranslate with user=message.user date=message.date %} Message written by {{ user }}, on {{ date }} {% endblocktranslate %}
+                </h2>
+        </div>
+        <div class="row">
+                <h3>{% if message.title|length < 1%}(Sin título){%else%}{{message.title}}{%endif%}</h3>
+        </div>
+        <div class="row">
+                <p>{{message.content}}</p>
+        </div>
+        <div class="row">
 
-<h1>MENSAJE DE {{message.user}}, A LAS {{message.date}}</h1>
-<h2>{% if message.title|length < 1%}(Sin título){%else%}{{message.title}}{%endif%}</h2>
-        <p>{{message.content}}</p>
-        <button><a href="{% url 'messages_app:list' %}">LISTA DE MENSAJES</a></button>
+        </div>
+        <div class="row">
+                <a class="btn btn-primary" href="{% url 'messages_app:list' %}">LISTA DE MENSAJES</a>
 
-        {%if request.user.is_authenticated %}
-        <p>registrado como {{request.user.username}} <span> </span><a href="{% url 'messages_app:logout' %}">
-                salir</a></p>
-        {%endif%}
+                {%if request.user.is_authenticated %}
+                <p>registrado como {{request.user.username}} <span> </span><a href="{% url 'messages_app:logout' %}">
+                        salir</a></p>
+                {%endif%}
+        </div>
+</div>
+
         {% endblock%}

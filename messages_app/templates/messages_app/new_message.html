@@ -1,24 +1,33 @@
 {% extends 'messages_app/base.html' %}
-{% block title%} Nuevo mensaje{% endblock%}
+{% load i18n %}
+{% block title%} {% trans 'new message'|capfirst %}{% endblock%}
 {% block content%}
+<div class="container py-3 px-3">
+    <div class="row">
+        <h1 class="text-primary">{% translate 'new message'|upper %}</h1>
+    </div>
+    <div class="row">
+        <form action="" method="post">
+            {% csrf_token %}
+            <ul class="list-group">
+                <li class="list-group-item py-3 border-0">
+                    <label for="usuario">{% translate 'name'|capfirst %}:</label>
+                    <input type="usuario" id="usuario" name="usuario" value={{request.user.username}} disabled>
+                </li>
+                <li class="list-group-item py-3 border-0">
+                    <label for="titulo">{% translate 'title(optional)'|capfirst %}:</label>
+                    {{form.title}}
+                </li>
+                <li class="list-group-item container border-0">
+                    <label class="row px-3 py-3" for="contenido">{% translate 'message'|capfirst %}:</label>
+                    {{form.content}}
+                </li>
+            </ul>
+            {% translate 'send message'|upper as send%}
+            <input type="submit" class="btn btn-primary mx-3 my-3 py-3 px-5" value="{{send}}">
+        </form>
+    </div>
+</div>
 
-<h1>NUEVO MENSAJE</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    <ul>
-        <li>
-            <label for="usuario">Nombre:</label>
-            <input type="usuario" id="usuario" name="usuario" value={{request.user.username}} disabled>
-        </li>
-        <li>
-            <label for="titulo">Titulo(opcional):</label>
-            {{form.title}}
-        </li>
-        <li>
-            <label for="contenido">Mensaje:</label>
-            {{form.content}}
-        </li>
-    </ul>
-    <input type="submit" value="ENVIAR MENSAJE">
-</form>
+
 {% endblock%}
