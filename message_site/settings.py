@@ -42,7 +42,6 @@ DJANGO_BASE = [
 THIRD_PARTY_APPS = [
     "django_tables2",
     "oauth2_provider",
-    "corsheaders",
     "rest_framework",
     "crispy_forms",
     "crispy_bootstrap5",
