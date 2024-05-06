@@ -4,7 +4,7 @@ cffi==1.15.1
 charset-normalizer==3.1.0
 cryptography==40.0.2
 django-crispy-forms
-pip install crispy-bootstrap5
+crispy-bootstrap5
 Deprecated==1.2.13
 Django==4.2
 django-oauth-toolkit==2.2.0
