@@ -24,15 +24,18 @@ jobs:
 
    - name: Push image to DigitalOcean Container Registry
      run: docker push registry.digitalocean.com/db-registry/mensajestest:$(echo $GITHUB_SHA | head -c7)
-
+  # push every image talkingbookscelery/celerybeat/web/etc
+  
    - name: Update deployment file
      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/db-registry/mensajestest:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
-
+  # update every deployment file
+  
    - name: Save DigitalOcean kubeconfig with short-lived credentials
      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DO_CLUSTER }}
 
-   #- name: Deploy to DigitalOcean Kubernetes
-   #  run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
-
-   #- name: Verify deployment
-   #  run: kubectl rollout status deployment/<deployment_name>  
+   - name: Deploy to DigitalOcean Kubernetes
+     run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+   #  run: kubectl apply -f $GITHUB_WORKSPACE/kubernetes/*.yml
+    
+   - name: Verify deployment
+     run: kubectl rollout status deployment/python-example
